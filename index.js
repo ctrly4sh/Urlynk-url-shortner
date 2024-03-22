@@ -1,25 +1,19 @@
-const express = require("express")
-const mongoose = require("mongoose")
-const PORT = 1234
-const app = express() // initialization of the Express Server
+const express = require("express");
+const { connectToMongoDB } = require("./connect");
+const urlRoute = require("./routes/url");
 
-//parsing application
-app.use(express.json())
-app.use(express.urlencoded({
-    extended: true
-}));
+const app = express();
+const PORT = 8001;
 
 
-app.get('/', (request, response) => {
-    response.send(`
-        <h1>UrLynk</h1>
-    `)
-})
 
-app.get('/home', (request, response) => {
+connectToMongoDB("mongodb://localhost:27017/short-url").then(() =>
+  console.log("Mongodb connected")
+);
 
-})
+app.use(express.json());
 
-app.listen(PORT, () => {
-    console.log(`Server started at port ${PORT}`);
-})
+app.use("/url", urlRoute);
+
+
+app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
