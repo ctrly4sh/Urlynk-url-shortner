@@ -3,8 +3,6 @@ const { connectToMongoDB } = require("./connect");
 const urlRoute = require("./routes/url");
 const URL = require("./models/url");
 
-
-
 const app = express();
 const PORT = 8001;
 
@@ -27,6 +25,5 @@ app.get('/:shortId' , async(req,res)=>{
   }})
   res.redirect(entry.redirectURL)
 })
-
 
 app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
